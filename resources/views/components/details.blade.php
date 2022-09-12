@@ -2,7 +2,7 @@
 @php
     $tags = explode(',',$item->tags)
 @endphp
-<a href="{{route('index')}}" class="inline-block text-black ml-4 mb-4"
+<a href="{{url()->previous()}}" class="inline-block text-black ml-4 mb-4"
                 ><i class="fa-solid fa-arrow-left"></i> Back
             </a>
             <div class="mx-4">
@@ -52,18 +52,18 @@
                                     Website</a
                                 >
                                 @auth
-                                <div class="flex justify-around">
-                                    <a class="p-5 bg-slate-700 text-white py-2 rounded-xl hover:opacity-80" href="{{route('edit',['job' => $item->id])}}"><i class="fa-solid fa-pencil"></i>Edit</a>
-                                    <form method="POST" action="{{route('destroy',['job' => $item->id])}}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="p-4 bg-red-500 text-white py-2 rounded-xl hover:opacity-80"><i class="fa-solid fa-trash"></i>Delete</button>
-                                    </form>
-                                </div>
+                                    @if ($item->user_id == Auth::user()->id)
+                                        <div class="flex justify-around">
+                                            <a class="p-5 bg-slate-700 text-white py-2 rounded-xl hover:opacity-80" href="{{route('edit',['job' => $item->id])}}"><i class="fa-solid fa-pencil"></i>Edit</a>
+                                            <form method="POST" action="{{route('destroy',['job' => $item->id])}}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="p-4 bg-red-500 text-white py-2 rounded-xl hover:opacity-80"><i class="fa-solid fa-trash"></i>Delete</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                
                                 @endauth
-                                
-                                
-                                
                             </div>
                         </div>
                     </div>
